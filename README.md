@@ -26,9 +26,17 @@ taski/
 │   └── schema.prisma                   # Modelos de datos
 ├── src/
 │   ├── controllers/
-│   │   └── users.controller.ts         # Capa HTTP req/res
+│   │   └── user-controller.ts          # Capa HTTP req/res
 │   └── services/
-│       └── users.service.ts            # Logica de negocio + DB
+│       └── user/
+│           ├── index.ts                # Punto de entrada del feature
+│           ├── service.ts              # Utilidades y mapeos compartidos
+│           ├── create.ts               # Create user
+│           ├── delete.ts               # Delete user
+│           ├── get-all.ts              # List users
+│           ├── get-by-id.ts            # Get user by id
+│           ├── put.ts                  # Replace user
+│           └── patch.ts                # Partial update user
 ├── components/
 │   ├── ui/
 │   ├── auth/
@@ -40,7 +48,7 @@ taski/
 ├── services/
 ├── store/
 ├── types/
-├── middleware.ts
+├── proxy.ts
 └── tailwind.config.ts
 ```
 
@@ -60,7 +68,7 @@ Frontend y backend viven en el mismo repositorio, con limites claros entre capas
 3. Seguridad por defecto
 - Validacion estricta de entrada con Zod.
 - Control de errores sin exponer stack sensible.
-- Middleware para proteger rutas privadas.
+- Proxy para proteger rutas privadas.
 - Normalizacion de datos de entrada (ejemplo: email lowercase).
 
 4. Escalabilidad
@@ -90,6 +98,9 @@ Cada nuevo dominio (boards, cards, comments, auth) replica este patron:
 - Mantener respuestas HTTP consistentes: { data } o { error }.
 - Centralizar cliente DB en lib/prisma.ts.
 - Mantener DTOs y validadores sincronizados.
+- Usar archivos y carpetas en kebab-case.
+- Mantener una sola fuente de verdad por dominio para evitar duplicados.
+- Estandarizar formato con .editorconfig y .gitattributes.
 
 ## Scripts
 

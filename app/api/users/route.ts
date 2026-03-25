@@ -1,4 +1,4 @@
-import { getUsersController, postUsersController } from "@/src/controllers/users.controller";
+import { getUsersController, postUsersController } from "@/src/controllers/user-controller";
 
 export async function GET() {
   return getUsersController();

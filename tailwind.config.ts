@@ -9,12 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "#f5f8ff",
-          100: "#e6eeff",
-          500: "#1f4bff",
-          700: "#1738be",
-        },
+        primary: "#2563EB",
+        secondary: "#4F46E5",
+        background: "#F8FAFC",
+        surface: "#FFFFFF",
       },
     },
   },

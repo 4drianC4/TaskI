@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
-import { createUser } from "@/services/users.service";
 import { useAuth } from "@/hooks/use-auth";
+import { createUser } from "@/services/user-service";
 
 export function RegisterForm() {
   const router = useRouter();

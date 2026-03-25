@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchUsers } from "@/services/users.service";
+
+import { fetchUsers } from "@/services/user-service";
 import type { UserDTO } from "@/types/user";
 
 export function useBoardUsers() {
