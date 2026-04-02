@@ -48,6 +48,7 @@ model Permissions {
 model RolePermissions {
   role_id       String
   permission_id String
+  level         RoleLevel
 
   role       Roles       @relation(fields: [role_id], references: [id])
   permission Permissions @relation(fields: [permission_id], references: [id])
@@ -65,6 +66,7 @@ model Users {
   system_role_id String
   created_at     DateTime  @default(now())
   updated_at     DateTime? @updatedAt
+  deleted_at     DateTime?
 
   system_role       Roles            @relation(fields: [system_role_id], references: [id])
   accounts          Accounts[]
