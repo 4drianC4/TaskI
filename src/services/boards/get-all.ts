@@ -7,7 +7,7 @@ export async function getAllByWorkspaceService(
 ): Promise<BoardDTO[]> {
   const normalizedWorkspaceId = workspaceId.trim();
   const allBoards = await prisma.boards.findMany({
-    where: { workspace_id: normalizedWorkspaceId, state: "active" },//duda aqui xd
+    where: { workspace_id: normalizedWorkspaceId, deleted_at: null },//duda aqui xd
     orderBy: { created_at: "desc" }
   });
   return allBoards.map(toBoardDTO);
