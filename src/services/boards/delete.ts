@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { BoardDTO } from "@/types/boards";
+import type { BoardDTO } from "@/types/boards";
 import { toBoardDTO } from "@/src/services/boards/service";
 
 export async function deleteBoardService(id: string): Promise<BoardDTO> {
