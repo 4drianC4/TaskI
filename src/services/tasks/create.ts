@@ -1,17 +1,9 @@
-import { prisma } from "@/lib/prisma";
-import type { CreateTaskInput, TaskDTO } from "@/types/task";
-import { normalizeCreateTaskInput, toTaskDTO } from "@/src/services/tasks/service";
+import { TaskService } from "./service";
+import { CreateTaskDTO } from "@/types/task";
 
-export async function createTaskService(input: CreateTaskInput): Promise<TaskDTO> {
-    const normalizedInput = normalizeCreateTaskInput(input);
-    const task = await prisma.task.create({
-        data: {
-            title: normalizedInput.title,
-            description: normalizedInput.description,
-            status: normalizedInput.status,
-            dueDate: normalizedInput.dueDate ? new Date(normalizedInput.dueDate) : null,
-            userId: normalizedInput.userId,
-        },
-    });
-    return toTaskDTO(task);
+export async function create(data: CreateTaskDTO) {
+    if (!data.title || !data.column_id) {
+        throw new Error("title y column_id son requeridos");
+    }
+    return TaskService.create(data);
 }

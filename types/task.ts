@@ -1,18 +1,10 @@
-export type TaskDTO = {
-    id: number;
+export type CreateTaskDTO = {
+    column_id: string;
+    assignee_id?: string;
     title: string;
-    description: string | null;
-    status: string;
-    dueDate: string | null;
-    userId: number;
-    createdAt: string;
-    updatedAt: string;
+    description?: string;
+    order?: number;
+    due_date?: string;
 };
 
-export type CreateTaskInput = {
-    title: string;
-    description?: string | null;
-    status?: string;
-    dueDate?: string | null;
-    userId: number;
-};
+export type UpdateTaskDTO = Partial<CreateTaskDTO>;
