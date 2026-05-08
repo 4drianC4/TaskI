@@ -23,7 +23,10 @@ export async function POST(
     const body = await req.json();
     const { name, color } = body;
     if (!name || !color) {
-      return NextResponse.json({ error: "name y color son requeridos" }, { status: 400 });
+      return NextResponse.json(
+        { error: "name y color son requeridos" },
+        { status: 400 }
+      );
     }
     const tag = await prisma.tags.create({
       data: { workspace_id: params.workspaceId, name, color },
