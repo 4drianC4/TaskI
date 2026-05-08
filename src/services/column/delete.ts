@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { toColumnDTO, ColumnDTO } from "@/src/services/column/service";
+import { toColumnDTO } from "@/src/services/column/service";
+import { ColumnDTO } from "@/types/column";
 
 export async function deleteColumnService(id: string): Promise<ColumnDTO> {
   const column = await prisma.columns.update({

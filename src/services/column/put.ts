@@ -1,12 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { toColumnDTO, ColumnDTO } from "@/src/services/column/service";
-
-type PutColumnInput = {
-  board_id: string;
-  name: string;
-  order: number;
-  is_done: boolean;
-};
+import { toColumnDTO } from "@/src/services/column/service";
+import { ColumnDTO, PutColumnInput } from "@/types/column";
 
 export async function putColumnService(id: string, input: PutColumnInput): Promise<ColumnDTO> {
   const column = await prisma.columns.update({

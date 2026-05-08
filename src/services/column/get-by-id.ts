@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { toColumnDTO, ColumnDTO } from "@/src/services/column/service";
+import { toColumnDTO } from "@/src/services/column/service";
+import { ColumnDTO } from "@/types/column";
+
 
 export async function getColumnByIdService(id: string): Promise<ColumnDTO | null> {
   const column = await prisma.columns.findFirst({

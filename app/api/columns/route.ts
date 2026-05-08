@@ -1,4 +1,7 @@
-import { getColumnsController, postColumnController } from "@/src/controllers/column-controller";
+import {
+  getColumnsController, postColumnController
+} from "@/src/controllers/column";
+
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

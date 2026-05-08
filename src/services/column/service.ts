@@ -1,3 +1,5 @@
+import { ColumnDTO } from "@/types/column";
+
 export type DbColumn = {
   id: string;
   board_id: string;
@@ -6,15 +8,6 @@ export type DbColumn = {
   is_done: boolean;
   created_at: Date;
   deleted_at: Date | null;
-};
-
-export type ColumnDTO = {
-  id: string;
-  boardId: string;
-  name: string;
-  order: number;
-  isDone: boolean;
-  createdAt: string;
 };
 
 export function toColumnDTO(column: DbColumn): ColumnDTO {
