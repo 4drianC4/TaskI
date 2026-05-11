@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
-import { getUsers, createUser } from "@/src/controllers/userM/user-controller";
 
+import {getUsersController,createUserController,} from "@/src/controllers/userM";
 
 export async function GET() {
-  return getUsers();
+  return getUsersController();
 }
 
 export async function POST(req: NextRequest) {
-  return createUser(req);
+  return createUserController(req);
 }
