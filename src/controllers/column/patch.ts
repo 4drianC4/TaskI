@@ -9,9 +9,7 @@ export async function patchColumnController(req: Request, id: string) {
         const column = await patchColumnService(id, payload);
         return NextResponse.json({ data: column }, { status: 200 });
     } catch (error) {
-        if (error instanceof ZodError) {
-            return NextResponse.json({ error: "Payload inválido", details: error.flatten() }, { status: 400 });
-        }
+        if (error instanceof ZodError) return NextResponse.json({ error: "Payload inválido", details: error.flatten() }, { status: 400 });
         return NextResponse.json({ error: "No se pudo actualizar la columna" }, { status: 500 });
     }
 }

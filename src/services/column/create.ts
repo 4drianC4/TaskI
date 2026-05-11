@@ -6,7 +6,7 @@ export async function createColumnService(input: CreateColumnInput): Promise<Col
   const column = await prisma.columns.create({
     data: {
       board_id: input.board_id,
-      name: input.name.trim(),
+      name: input.name,
       order: input.order,
     },
   });

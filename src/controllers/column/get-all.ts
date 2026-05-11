@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { getAllColumnsService } from "@/src/services/column";
+
 export async function getColumnsController(boardId: string) {
     try {
+        if (!boardId) return NextResponse.json({ error: "Board ID es requerido" }, { status: 400 });
+
         const columns = await getAllColumnsService(boardId);
         return NextResponse.json({ data: columns }, { status: 200 });
-    } catch {
-        return NextResponse.json({ error: "No se pudieron obtener las columnas" }, { status: 500 });
+    } catch (error) {
+        console.error("Error en getColumnsController: ", error);
+
+        return NextResponse.json({ error: "Error interno al obtener las columnas" }, { status: 500 });
     }
 }

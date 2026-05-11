@@ -7,6 +7,5 @@ export async function getAllColumnsService(boardId: string): Promise<ColumnDTO[]
     where: { board_id: boardId, deleted_at: null },
     orderBy: { order: "asc" },
   });
-
   return columns.map(toColumnDTO);
 }

@@ -13,12 +13,6 @@ export type CreateColumnInput = {
     order: number;
 };
 
-export type UpdateColumnInput = {
-    name?: string;
-    order?: number;
-    is_done?: boolean;
-};
-
 export type PutColumnInput = {
     board_id: string;
     name: string;
