@@ -1,23 +1,34 @@
 import { NextRequest } from "next/server";
-import {getUser,updateUser,deleteUser} from "@/src/controllers/userM/user-controller";
 
+import {
+  getUserController,
+  updateUserController,
+  deleteUserController,
+} from "@/src/controllers/userM";
+
+type Params = {
+  params: {
+    id: string;
+  };
+};
 
 export async function GET(
-  req: NextRequest,{ params }: { params: { id: string } }
+  req: Request,
+  { params }: Params
 ) {
-  return getUser(params.id);
+  return getUserController(params.id);
 }
 
-
 export async function PUT(
-  req: NextRequest,{ params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: Params
 ) {
-  return updateUser(req, params.id);
+  return updateUserController(req, params.id);
 }
 
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: Params
 ) {
-  return deleteUser(params.id);
+  return deleteUserController(params.id);
 }
