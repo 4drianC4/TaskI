@@ -1,10 +1,10 @@
-import type { CreateUserInput, UserDTO } from "@/types/user";
+import type { UserDTO } from "@/types/userM";
 
 export type DbUser = {
-  id: number;
+  id: string;
   email: string;
   name: string | null;
-  createdAt: Date;
+  created_at: Date;
 };
 
 export function toUserDTO(user: DbUser): UserDTO {
@@ -12,14 +12,6 @@ export function toUserDTO(user: DbUser): UserDTO {
     id: user.id,
     email: user.email,
     name: user.name,
-    createdAt: user.createdAt.toISOString(),
-  };
-}
-
-export function normalizeCreateUserInput(input: CreateUserInput): CreateUserInput {
-  return {
-    ...input,
-    email: input.email.toLowerCase().trim(),
-    name: input.name?.trim() || undefined,
+    createdAt: user.created_at.toISOString(),
   };
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { CreateUserInput } from "@/types/userM";
-import { createUser } from "@/src/services/userM";
+import { createUser } from "@/src/services/user";
 
 //recibes ,lees,validas, crear,services,response
 

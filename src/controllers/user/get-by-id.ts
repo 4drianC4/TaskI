@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { deleteUser } from "@/src/services/userM";
-
+import { getUserById } from "@/src/services/user";
 
 function isNotFoundUserError(error: unknown): boolean {
   return (
@@ -9,29 +8,30 @@ function isNotFoundUserError(error: unknown): boolean {
   );
 }
 
-export async function deleteUserController(id: string) {
+export async function getUserController(id: string) {
   try {
     const userId = id.trim();
 
-    if(!userId){return NextResponse.json(
-        { error: "Id inválido" },
+    if(!userId){ return NextResponse.json(
+        { error:"Id inválido"},
         { status: 400 }
       );
     }
-
-    const user = await deleteUser(userId);
+    const user = await getUserById(userId);
     return NextResponse.json(
       { data: user },
       { status: 200 }
     );
-  } catch(error){
-    if (isNotFoundUserError(error)) { return NextResponse.json(
-        {error:"Usuario no encontrado"},
-        {status: 404}
+  } catch (error){
+    if (isNotFoundUserError(error)) {
+      return NextResponse.json(
+        { error: "Usuario no encontrado" },
+        { status: 404 }
       );
     }
+
     return NextResponse.json(
-      { error: "Error al eliminar usuario" },
+      { error: "Error al obtener usuario" },
       { status: 500 }
     );
   }

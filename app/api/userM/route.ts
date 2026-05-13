@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 
-import {getUsersController,createUserController,} from "@/src/controllers/userM";
+import {getUsersController,createUserController,} from "@/src/controllers/user";
 
 export async function GET() {
   return getUsersController();
