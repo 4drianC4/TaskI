@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{baseDEV}}/subtask"
+  url: "{{baseDEV}}/subtasks?task_id=cmp2yzber00007byigrgqr9l3"
+  params:
+    - name: task_id
+      value: cmp2yzber00007byigrgqr9l3
+      type: query
   auth: inherit
 
 settings:
