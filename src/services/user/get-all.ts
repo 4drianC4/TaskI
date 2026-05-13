@@ -1,12 +1,19 @@
 import { prisma } from "@/lib/prisma";
-import type { UserDTO } from "@/types/user";
-
+import type { UserDTO } from "@/types/userM";
 import { toUserDTO } from "@/src/services/user/service";
 
-export async function getAllUsersService(): Promise<UserDTO[]> {
-  const users = await prisma.user.findMany({
-    orderBy: { createdAt: "desc" },
+export const getAllUsers = async (): 
+Promise<UserDTO[]> => {
+  const users = await prisma.users.findMany({
+    where: {
+      deleted_at: null,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      created_at: true,
+    },
   });
-
   return users.map(toUserDTO);
-}
+};
