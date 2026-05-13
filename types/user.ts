@@ -5,7 +5,10 @@ export type UserDTO = {
   createdAt: string;
 };
 
+
+
 export type CreateUserInput = {
   email: string;
   name?: string;
+  systemRoleId: string;
 };
