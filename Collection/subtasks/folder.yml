@@ -1,0 +1,7 @@
+info:
+  name: subtasks
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

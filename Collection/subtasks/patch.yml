@@ -1,0 +1,27 @@
+info:
+  name: patch
+  type: http
+  seq: 5
+
+http:
+  method: PATCH
+  url: "{{baseDEV}}/subtasks/:id"
+  params:
+    - name: id
+      value: cmp4bif5v00029u53fxga463w
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+      "title": "Crear validaciones",
+      "order": 1,
+      "is_completed": false
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,12 +1,23 @@
 import { prisma } from "@/lib/prisma";
-import type { UserDTO } from "@/types/user";
-
+import type { UserDTO } from "@/types/userM";
 import { toUserDTO } from "@/src/services/user/service";
 
-export async function deleteUserService(id: number): Promise<UserDTO> {
-  const user = await prisma.user.delete({
-    where: { id },
+export const deleteUser = async (id: string):
+Promise<UserDTO> => {
+  const existingUser = await prisma.users.findFirst({
+    where: {
+      id,
+      deleted_at: null,
+    },
   });
-
+  if (!existingUser) {
+    throw new Error("Usuario no encontrado");
+  }
+  const user = await prisma.users.update({
+    where: { id },
+    data: {
+      deleted_at: new Date(),
+    },
+  });
   return toUserDTO(user);
-}
+};
