@@ -4,7 +4,7 @@ import {
   getUserController,
   updateUserController,
   deleteUserController,
-} from "@/src/controllers/userM";
+} from "@/src/controllers/user";
 
 type Params = {
   params: {

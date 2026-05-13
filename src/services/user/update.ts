@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { UpdateUserInput, UserDTO } from "@/types/userM";
-import { toUserDTO } from "@/src/services/userM/service";
+import { toUserDTO } from "@/src/services/user/service";
 
 export const updateUser = async (id: string,data: UpdateUserInput):
  Promise<UserDTO> => {

@@ -1,17 +1,22 @@
 import { prisma } from "@/lib/prisma";
-import type { CreateUserInput, UserDTO } from "@/types/user";
+import type { CreateUserInput, UserDTO } from "@/types/userM";
+import { toUserDTO } from "@/src/services/user/service";
 
-import { normalizeCreateUserInput, toUserDTO } from "@/src/services/user/service";
-
-export async function createUserService(input: CreateUserInput): Promise<UserDTO> {
-  const normalizedInput = normalizeCreateUserInput(input);
-
-  const user = await prisma.user.create({
-    data: {
-      email: normalizedInput.email,
-      name: normalizedInput.name,
-    },
+export const createUser = async (data: CreateUserInput):
+ Promise<UserDTO> => {
+  const existe = await prisma.users.findUnique({
+    where: { email: data.email },
   });
 
+  if (existe) {
+    throw new Error("El email ya existe");
+  }
+  const user = await prisma.users.create({
+    data: {
+      email: data.email,
+      name: data.name,
+      system_role_id: data.systemRoleId,
+    },
+  });
   return toUserDTO(user);
-}
+};

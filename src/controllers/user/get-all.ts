@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAllUsers } from "@/src/services/userM";
+import { getAllUsers } from "@/src/services/user";
 
 export async function getUsersController() {
   try {

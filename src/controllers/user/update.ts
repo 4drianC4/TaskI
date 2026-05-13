@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { UpdateUserInput } from "@/types/userM";
-import { updateUser } from "@/src/services/userM";
+import { updateUser } from "@/src/services/user";
 
 function isObjectRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
