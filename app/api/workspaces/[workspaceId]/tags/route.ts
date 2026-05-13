@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { workspaceId: string } }
+  { params }: { params: Promise<{ workspaceId: string }> }
 ) {
   try {
+    const { workspaceId } = await params;
     const tags = await prisma.tags.findMany({
-      where: { workspace_id: params.workspaceId, deleted_at: null },
+      where: { workspace_id: workspaceId, deleted_at: null },
     });
     return NextResponse.json({ data: tags }, { status: 200 });
   } catch (error) {
@@ -17,9 +18,10 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { workspaceId: string } }
+  { params }: { params: Promise<{ workspaceId: string }> }
 ) {
   try {
+    const { workspaceId } = await params;
     const body = await req.json();
     const { name, color } = body;
     if (!name || !color) {
@@ -29,7 +31,7 @@ export async function POST(
       );
     }
     const tag = await prisma.tags.create({
-      data: { workspace_id: params.workspaceId, name, color },
+      data: { workspace_id: workspaceId, name, color },
     });
     return NextResponse.json({ data: tag }, { status: 201 });
   } catch (error) {

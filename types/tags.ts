@@ -13,13 +13,13 @@ export type TaskTagDTO = {
   tag?: TagDTO;
 };
 
-// Input para crear un tag
+// creartag
 export type CreateTagInput = {
   name: string;
   color: string;
 };
 
-// Input para actualizar un tag
+// actualizartag
 export type UpdateTagInput = {
   name?: string;
   color?: string;

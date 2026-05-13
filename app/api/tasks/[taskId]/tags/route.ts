@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { taskId: string } }
+  { params }: { params: Promise<{ taskId: string }> }
 ) {
   try {
+    const { taskId } = await params;
     const taskTags = await prisma.taskTags.findMany({
-      where: { task_id: params.taskId },
+      where: { task_id: taskId },
       include: { tag: true },
     });
     return NextResponse.json({ data: taskTags }, { status: 200 });
@@ -18,16 +19,17 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { taskId: string } }
+  { params }: { params: Promise<{ taskId: string }> }
 ) {
   try {
+    const { taskId } = await params;
     const body = await req.json();
     const { tag_id } = body;
     if (!tag_id) {
       return NextResponse.json({ error: "tag_id es requerido" }, { status: 400 });
     }
     const taskTag = await prisma.taskTags.create({
-      data: { task_id: params.taskId, tag_id },
+      data: { task_id: taskId, tag_id },
       include: { tag: true },
     });
     return NextResponse.json({ data: taskTag }, { status: 201 });
@@ -38,15 +40,16 @@ export async function POST(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { taskId: string } }
+  { params }: { params: Promise<{ taskId: string }> }
 ) {
   try {
+    const { taskId } = await params;
     const body = await req.json();
     const { tag_id } = body;
     await prisma.taskTags.delete({
       where: {
         task_id_tag_id: {
-          task_id: params.taskId,
+          task_id: taskId,
           tag_id,
         },
       },
