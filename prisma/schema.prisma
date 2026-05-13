@@ -1,20 +1,238 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
+
+
+enum RoleLevel {
+  system
+  workspace
+}
+
+enum BoardState {
+  active
+  inactive
+  finished
+}
+
+enum BoardVisibility {
+  private
+  workspace
+  public
+}
+
+model Roles {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  level       RoleLevel
+  description String?
+
+  permissions       RolePermissions[]
+  users             Users[]
+  workspace_members WorkspaceMembers[]
+}
+
+model Permissions {
+  id          String  @id @default(cuid())
+  action      String  @unique
+  level       String
+  description String?
+
+  roles RolePermissions[]
+}
+
+model RolePermissions {
+  role_id       String
+  permission_id String
+  level         RoleLevel
+
+  role       Roles       @relation(fields: [role_id], references: [id])
+  permission Permissions @relation(fields: [permission_id], references: [id])
+
+  @@id([role_id, permission_id])
+}
+
+model Users {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  email_verified DateTime?
+  image          String?
+  bio            String?
+  system_role_id String
+  created_at     DateTime  @default(now())
+  updated_at     DateTime? @updatedAt
+  deleted_at     DateTime?
+
+  system_role       Roles            @relation(fields: [system_role_id], references: [id])
+  accounts          Accounts[]
+  sessions          Sessions[]
+  owned_workspaces  Workspaces[]
+  workspace_members WorkspaceMembers[]
+  assigned_tasks    Tasks[]          @relation("TaskAssignee")
+  comments          Comments[]
+  activity_logs     ActivityLogs[]
+}
+
+model Accounts {
+  id                  String  @id @default(cuid())
+  user_id             String
+  type                String
+  provider            String
+  provider_account_id String
+  refresh_token       String?
+  access_token        String?
+  expires_at          Int?
+  token_type          String?
+  scope               String?
+
+  user Users @relation(fields: [user_id], references: [id])
+}
+
+model Sessions {
+  id            String   @id @default(cuid())
+  session_token String   @unique
+  user_id       String
+  expires       DateTime
+
+  user Users @relation(fields: [user_id], references: [id])
+}
+
+model Workspaces {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  owner_id    String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  deleted_at  DateTime?
+
+  owner   Users            @relation(fields: [owner_id], references: [id])
+  members WorkspaceMembers[]
+  boards  Boards[]
+  tags    Tags[]
+}
+
+model WorkspaceMembers {
+  id           String   @id @default(cuid())
+  workspace_id String
+  user_id      String
+  role_id      String
+  joined_at    DateTime @default(now())
+
+  workspace Workspaces @relation(fields: [workspace_id], references: [id])
+  user      Users      @relation(fields: [user_id], references: [id])
+  role      Roles      @relation(fields: [role_id], references: [id])
+
+  @@unique([workspace_id, user_id])
+}
+
+model Boards {
+  id           String          @id @default(cuid())
+  workspace_id String
+  name         String
+  cover_color  String?
+  cover_image  String?
+  state        BoardState?
+  visibility   BoardVisibility?
+  created_at   DateTime        @default(now())
+  updated_at   DateTime?       @updatedAt
+  deleted_at   DateTime?
+
+  workspace Workspaces @relation(fields: [workspace_id], references: [id])
+  columns   Columns[]
+}
+
+model Columns {
+  id         String    @id @default(cuid())
+  board_id   String
+  name       String
+  order      Int
+  is_done    Boolean   @default(false)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  board Boards  @relation(fields: [board_id], references: [id])
+  tasks Tasks[]
+}
+
+model Tasks {
+  id          String    @id @default(cuid())
+  column_id   String
+  assignee_id String?
+  title       String
+  description String?
+  order       Int
+  due_date    DateTime?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime? @updatedAt
+  deleted_at  DateTime?
+
+  column        Columns       @relation(fields: [column_id], references: [id])
+  assignee      Users?        @relation("TaskAssignee", fields: [assignee_id], references: [id])
+  subtasks      Subtasks[]
+  comments      Comments[]
+  task_tags     TaskTags[]
+  activity_logs ActivityLogs[]
+}
+
+model Subtasks {
+  id           String    @id @default(cuid())
+  task_id      String
+  title        String
+  order        Int
+  is_completed Boolean   @default(false)
+  created_at   DateTime  @default(now())
+  deleted_at   DateTime?
+
+  task Tasks @relation(fields: [task_id], references: [id])
+}
+
+model Comments {
+  id         String    @id @default(cuid())
+  task_id    String
+  user_id    String
+  content    String
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+
+  task Tasks @relation(fields: [task_id], references: [id])
+  user Users @relation(fields: [user_id], references: [id])
+}
+
+model Tags {
+  id           String    @id @default(cuid())
+  workspace_id String
+  name         String
+  color        String
+  deleted_at   DateTime?
+
+  workspace Workspaces @relation(fields: [workspace_id], references: [id])
+  task_tags TaskTags[]
+}
+
+model TaskTags {
+  task_id String
+  tag_id  String
+
+  task Tasks @relation(fields: [task_id], references: [id])
+  tag  Tags  @relation(fields: [tag_id], references: [id])
+
+  @@id([task_id, tag_id])
+}
+
+model ActivityLogs {
+  id         String   @id @default(cuid())
+  task_id    String
+  user_id    String
+  action     String
+  created_at DateTime @default(now())
+
+  task Tasks @relation(fields: [task_id], references: [id])
+  user Users @relation(fields: [user_id], references: [id])
 }
