@@ -6,6 +6,10 @@ function isObjectRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
+function hasErrorCode(value: unknown): value is { code: string } {
+  return isObjectRecord(value) && typeof value.code === "string";
+}
+
 export async function postSubtasksController(req: Request) {
   try {
     const body: unknown = await req.json();
@@ -46,8 +50,22 @@ export async function postSubtasksController(req: Request) {
     return NextResponse.json({ data: subtask }, { status: 201 });
   } catch (error) {
     console.error("postSubtasksController error:", error);
-    
+
     if (error instanceof Error) {
+      if (hasErrorCode(error) && error.code === "P2003") {
+        return NextResponse.json(
+          { error: "task_id not found or invalid" },
+          { status: 404 }
+        );
+      }
+
+      if (hasErrorCode(error) && error.code === "P2002") {
+        return NextResponse.json(
+          { error: "Subtask already exists with these parameters" },
+          { status: 409 }
+        );
+      }
+      
       if (error.message.includes("Foreign key constraint failed")) {
         return NextResponse.json(
           { error: "task_id not found or invalid" },

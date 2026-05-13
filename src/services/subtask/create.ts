@@ -6,7 +6,7 @@ import { normalizeCreateSubtaskInput, toSubtaskDTO } from "@/src/services/subtas
 export async function createSubtaskService(input: CreateSubtaskInput): Promise<SubtaskDTO> {
   const normalizedInput = normalizeCreateSubtaskInput(input);
 
-  const subtask = await prisma.subtask.create({
+  const subtask = await prisma.subtasks.create({
 	data: {
 	  title: normalizedInput.title,
 	  task_id: normalizedInput.taskId,

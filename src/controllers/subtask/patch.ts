@@ -111,6 +111,13 @@ export async function patchSubtaskController(req: Request, id: string) {
   } catch (error) {
     console.error("patchSubtaskController error:", error);
 
+    if (error instanceof Error) {
+      // Prisma v7: P2025 = Record to update not found
+      if ((error as any).code === "P2025" || error.message === "NOT_FOUND") {
+        return NextResponse.json({ error: "Subtask not found" }, { status: 404 });
+      }
+    }
+
     return NextResponse.json({ error: "Failed to update subtask" }, { status: 500 });
   }
 }

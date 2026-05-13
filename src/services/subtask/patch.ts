@@ -4,7 +4,7 @@ import type { SubtaskDTO, UpdateSubtaskInput } from "@/types/subtask";
 import { toSubtaskDTO } from "@/src/services/subtask/service";
 
 export async function patchSubtaskService(id: string, input: UpdateSubtaskInput): Promise<SubtaskDTO> {
-  const subtask = await prisma.subtask.update({
+  const subtask = await prisma.subtasks.update({
     where: { id },
     data: {
       title: input.title,
