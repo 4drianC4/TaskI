@@ -8,8 +8,8 @@ export async function getColumnsController(boardId: string) {
         const columns = await getAllColumnsService(boardId);
         return NextResponse.json({ data: columns }, { status: 200 });
     } catch (error) {
-        console.error("Error en getColumnsController: ", error);
+        console.error("Error al obtener las columnas: ", error);
 
-        return NextResponse.json({ error: "Error interno al obtener las columnas" }, { status: 500 });
+        return NextResponse.json({ error: "Error al obtener las columnas" }, { status: 500 });
     }
 }
