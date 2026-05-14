@@ -5,7 +5,7 @@ import { toSubtaskDTO } from "@/src/services/subtask/service";
 
 export async function getAllSubtasksByTaskIdService(taskId: string): Promise<SubtaskDTO[]> {
   const subtasks = await prisma.subtasks.findMany({
-    where: { task_id: taskId },
+    where: { task_id: taskId, deleted_at: null },
     orderBy: { order: "asc" },
   });
 

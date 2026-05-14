@@ -41,6 +41,7 @@ export async function patchSubtasksController(req: Request) {
       where: {
         id: { in: payload.subtaskIds },
         task_id: payload.taskId,
+        deleted_at: null,
       },
     });
 
