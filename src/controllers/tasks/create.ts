@@ -6,7 +6,8 @@ export async function createTaskController(req: NextRequest) {
         const body = await req.json();
         const task = await create(body);
         return NextResponse.json(task, { status: 201 });
-    } catch (e: any) {
-        return NextResponse.json({ error: e.message }, { status: 400 });
+    } catch (e: unknown) {
+        const error = e instanceof Error ? e : new Error(String(e));
+        return NextResponse.json({ error: error.message }, { status: 400 });
     }
 }
