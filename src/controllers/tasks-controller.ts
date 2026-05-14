@@ -17,9 +17,11 @@ export async function handleCreate(req: NextRequest) {
         const body = await req.json();
         const task = await create(body);
         return NextResponse.json(task, { status: 201 });
+
     } catch (e: unknown) {
         const error = e instanceof Error ? e : new Error(String(e));
         return NextResponse.json({ error: error.message }, { status: 400 });
+
     }
 }
 
@@ -34,6 +36,7 @@ export async function handlePut(id: string, req: NextRequest) {
         const body = await req.json();
         const task = await put(id, body);
         return NextResponse.json(task);
+      
     } catch (e: unknown) {
         const error = e instanceof Error ? e : new Error(String(e));
         return NextResponse.json({ error: error.message }, { status: 400 });
