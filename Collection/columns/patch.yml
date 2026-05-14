@@ -5,18 +5,16 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseDEV}}/subtasks/:id"
+  url: "{{baseDEV}}/columns/:id"
   params:
     - name: id
-      value: cmp4bq1bd00039u53v8ul04i8
+      value: bca329eb-177c-427e-a531-21b4d61d4177
       type: path
   body:
     type: json
     data: |-
       {
-      "title": "",
-      "order": 1,
-      "is_completed": false
+        "name": "Columna actualizada con patch"
       }
   auth: inherit
 

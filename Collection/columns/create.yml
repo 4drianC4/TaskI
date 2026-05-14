@@ -1,0 +1,23 @@
+info:
+  name: create
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseDEV}}/columns"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Columna test",
+        "board_id": "board-1",
+        "order": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

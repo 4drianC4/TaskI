@@ -1,0 +1,22 @@
+info:
+  name: delete
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{baseDEV}}/columns/:id"
+  params:
+    - name: ""
+      value: ""
+      type: query
+    - name: id
+      value: bca329eb-177c-427e-a531-21b4d61d4177
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

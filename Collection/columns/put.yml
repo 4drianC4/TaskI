@@ -1,0 +1,28 @@
+info:
+  name: put
+  type: http
+  seq: 6
+
+http:
+  method: PUT
+  url: "{{baseDEV}}/columns/:id"
+  params:
+    - name: id
+      value: bca329eb-177c-427e-a531-21b4d61d4177
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Columna actualizada con put",
+        "board_id": "board-1",
+        "order": 1,
+        "is_done": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
