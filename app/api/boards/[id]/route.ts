@@ -1,7 +1,7 @@
 import {
   deleteBoardController,
   putBoardController,
-} from "@/src/controllers/boardController";
+} from "@/src/controllers/boards/index";
 type RouteContext = { params: { id: string } | Promise<{ id: string }> };
 export async function PUT(req: Request, { params }: RouteContext) {
   const { id } = await params;
