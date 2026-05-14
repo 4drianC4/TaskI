@@ -1,0 +1,19 @@
+info:
+  name: get-all
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseDEV}}/tasks?column_id=column-1"
+  params:
+    - name: column_id
+      value: column-1
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

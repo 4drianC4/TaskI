@@ -1,0 +1,19 @@
+info:
+  name: delete
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{baseDEV}}/tasks/:id"
+  params:
+    - name: id
+      value: cmp5m5f1a0005cayi8y2dqoxq
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
