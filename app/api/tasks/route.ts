@@ -1,10 +1,10 @@
 import { NextRequest } from "next/server";
-import { handleGetAll, handleCreate } from "@/src/controllers/tasks-controller";
+import { getAllTasksController, createTaskController } from "@/src/controllers/tasks/index";
 
 export async function GET(req: NextRequest) {
-    return handleGetAll(req);
+    return getAllTasksController(req);
 }
 
 export async function POST(req: NextRequest) {
-    return handleCreate(req);
+    return createTaskController(req);
 }
