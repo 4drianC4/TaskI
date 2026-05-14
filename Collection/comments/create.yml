@@ -1,0 +1,23 @@
+info:
+  name: create
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseDEV}}/comments"
+  body:
+    type: json
+    data: |
+      {
+        "task_id": "cmp2ummhu0003idjti4ssb3v1",
+        "user_id": "cmp2uhhmx00018qjtmz9osroj",
+        "content": "XD"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
