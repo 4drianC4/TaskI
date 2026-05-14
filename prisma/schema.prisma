@@ -41,7 +41,7 @@ model Boards {
   state        BoardState?
   visibility   BoardVisibility?
   created_at   DateTime         @default(now())
-  updated_at   DateTime?
+  updated_at   DateTime?        @updatedAt
   deleted_at   DateTime?
   Workspaces   Workspaces       @relation(fields: [workspace_id], references: [id])
   Columns      Columns[]
