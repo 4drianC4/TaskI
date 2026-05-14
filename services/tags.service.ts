@@ -12,7 +12,7 @@ type TagResponse = {
 // GET todos los tags de un workspace
 export async function fetchTags(workspaceId: string): Promise<TagDTO[]> {
   const response = await apiClient<TagsResponse>(
-    `/api/workspaces/${workspaceId}/tags`,
+    `/api/tags?workspaceId=${workspaceId}`,
     {
       method: "GET",
       cache: "no-store",
@@ -27,7 +27,7 @@ export async function fetchTagById(
   tagId: string
 ): Promise<TagDTO> {
   const response = await apiClient<TagResponse>(
-    `/api/workspaces/${workspaceId}/tags/${tagId}`,
+    `/api/tags/${tagId}?workspaceId=${workspaceId}`,
     {
       method: "GET",
       cache: "no-store",
@@ -42,10 +42,13 @@ export async function createTag(
   input: CreateTagInput
 ): Promise<TagDTO> {
   const response = await apiClient<TagResponse>(
-    `/api/workspaces/${workspaceId}/tags`,
+    `/api/tags`,
     {
       method: "POST",
-      body: JSON.stringify(input),
+      body: JSON.stringify({
+        ...input,
+        workspace_id: workspaceId,
+      }),
     }
   );
   return response.data;
@@ -58,7 +61,7 @@ export async function updateTag(
   input: UpdateTagInput
 ): Promise<TagDTO> {
   const response = await apiClient<TagResponse>(
-    `/api/workspaces/${workspaceId}/tags/${tagId}`,
+    `/api/tags/${tagId}?workspaceId=${workspaceId}`,
     {
       method: "PUT",
       body: JSON.stringify(input),
@@ -72,7 +75,7 @@ export async function deleteTag(
   workspaceId: string,
   tagId: string
 ): Promise<void> {
-  await apiClient(`/api/workspaces/${workspaceId}/tags/${tagId}`, {
+  await apiClient(`/api/tags/${tagId}?workspaceId=${workspaceId}`, {
     method: "DELETE",
   });
 }
